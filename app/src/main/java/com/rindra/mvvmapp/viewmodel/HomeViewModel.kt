@@ -18,10 +18,10 @@ class HomeViewModel: ViewModel() {
     private var _loading = MutableLiveData<Boolean>()
     var loading: LiveData<Boolean> = _loading
 
-    fun getUser(){
+    fun getUser(id:Int=1){
         _loading.postValue(true)
         viewModelScope.launch {
-            val result = userRepository.getUser()
+            val result = userRepository.getUser(id)
             _user.postValue(result)
             _loading.postValue(false)
         }

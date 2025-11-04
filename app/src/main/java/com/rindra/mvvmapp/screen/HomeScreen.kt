@@ -7,7 +7,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.rindra.mvvmapp.viewmodel.HomeViewModel
@@ -19,6 +23,11 @@ fun HomeScreen(
 ) {
     val user = viewModel.user.observeAsState()
     val loading = viewModel.loading.observeAsState()
+
+    var userId by remember {
+        mutableIntStateOf(1)
+    }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -27,7 +36,8 @@ fun HomeScreen(
     ) {
         Button(
             onClick = {
-                viewModel.getUser()
+                viewModel.getUser(userId)
+                userId++
             }
         ) {
             Text(text = "Get user")
